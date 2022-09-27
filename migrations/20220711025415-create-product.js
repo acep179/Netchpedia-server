@@ -11,26 +11,17 @@ module.exports = {
       name: {
         type: Sequelize.STRING
       },
-      desc: {
-        type: Sequelize.STRING
-      },
-      price: {
-        type: Sequelize.INTEGER
-      },
       image: {
         type: Sequelize.STRING
       },
-      qty: {
+      purchasePrice: {
         type: Sequelize.INTEGER
       },
-      idUser: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: "users",
-          key: "id",
-        },
-        onUpdate: "CASCADE",
-        onDelete: "CASCADE",
+      sellingPrice: {
+        type: Sequelize.INTEGER
+      },
+      qty: {
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,

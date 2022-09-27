@@ -14,56 +14,15 @@ exports.addProduct = async (req, res) => {
         
         let newProduct = await product.create({
             ...data,
-            image: result.secure_url,
-            idUser: req.user.id 
+            image: result.secure_url
         })
         
         newProduct = JSON.parse(JSON.stringify(newProduct))
-
-        // code here
-        // const categoryData = await category.findOne({
-        //     where: {
-        //         id: categoryId,
-        //     },
-        // });
-
-        // if (categoryData) {
-        //     await category_product.create({
-        //         idCategory: categoryData.id,
-        //         idProduct: newProduct.id
-        //     });
-        // } else {
-        //     const newCategory = await category.create({ name: categoryName });
-        //     await category_product.create({
-        //         idCategory: newCategory.id,
-        //         idProduct: newProduct.id
-        //     });
-        // }
         
         let productData = await product.findOne({
             where: {
                 id: newProduct.id,
             },
-            include: [
-                {
-                    model: user,
-                    as: "user",
-                    attributes: {
-                        exclude: ["createdAt", "updatedAt", "password"],
-                    },
-                },
-                // {
-                //     model: category,
-                //     as: "categories",
-                //     through: {
-                //         model: category_product,
-                //         as: "bridge",
-                //     },
-                //     attributes: {
-                //         exclude: ["createdAt", "updatedAt"],
-                //     },
-                // },
-            ],
             attributes: {
                 exclude: ["createdAt", "updatedAt", "idUser"],
             },
@@ -79,6 +38,7 @@ exports.addProduct = async (req, res) => {
         res.status(500).send({
             status: "failed",
             message: "Server Error",
+            error
         });
     }
 };
@@ -88,27 +48,6 @@ exports.getProducts = async (req, res) => {
     try {
 
         const dataProduct = await product.findAll({
-            include: [
-                {
-                    model: user,
-                    as: "user",
-                    attributes: {
-                        exclude: ["createdAt", "updatedAt", "password"],
-                    },
-                },
-                {
-                    model: category,
-                    as: "categories",
-                    through: {
-                        model: category_product,
-                        as: "bridge",
-                        attributes: [],
-                    },
-                    attributes: {
-                        exclude: ["createdAt", "updatedAt"],
-                    },
-                },
-            ],
             attributes: {
                 exclude: ["createdAt","updatedAt","idUser"]
             },
@@ -139,27 +78,6 @@ exports.getProduct = async (req, res) => {
             where: {
                 id
             },
-            include: [
-                {
-                    model: user,
-                    as: "user",
-                    attributes: {
-                        exclude: ["createdAt", "updatedAt", "password"],
-                    },
-                },
-                {
-                    model: category,
-                    as: "categories",
-                    through: {
-                        model: category_product,
-                        as: "bridge",
-                        attributes: [],
-                    },
-                    attributes: {
-                        exclude: ["createdAt", "updatedAt"],
-                    },
-                },
-            ],
             attributes: {
                 exclude: ["createdAt","updatedAt","idUser"]
             }
