@@ -103,11 +103,23 @@ exports.updateProduct = async (req, res) => {
 
         const {id} = req.params
 
-        await product.update(req.body,{
+        const result = await cloudinary.uploader.upload(req.file.path, {
+            folder: 'dumbmerch',
+            use_filename: true,
+            unique_filename: false,
+        });
+
+        await product.update(
+            {
+                ...req.body,
+                image: result.secure_url
+            },
+            {
             where: {
                 id
             }
-        });
+        }
+        );
 
         res.send({
             status: "success",
