@@ -1,4 +1,4 @@
-const { user, product, category, category_product } = require("../../models");
+const { product} = require("../../models");
 const cloudinary = require('../utils/cloudinary');
 
 exports.addProduct = async (req, res) => {

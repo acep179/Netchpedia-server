@@ -19,14 +19,6 @@ module.exports = (sequelize, DataTypes) => {
         },
       });
 
-      //. RElasi Has Many to Product
-      user.hasMany(models.product, {
-        as: "products",
-        foreignKey: {
-          name: "idUser",
-        },
-      });
-
       //. Relasi Has Many to Transaction as Buyer
       user.hasMany(models.transaction, {
         as: "buyerTransactions",
