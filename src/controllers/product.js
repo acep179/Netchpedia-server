@@ -115,10 +115,10 @@ exports.updateProduct = async (req, res) => {
                 image: result.secure_url
             },
             {
-            where: {
-                id
+                where: {
+                    id
+                }
             }
-        }
         );
 
         res.send({
